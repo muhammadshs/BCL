@@ -9,6 +9,7 @@ public class Flight {
     private Date departureTime;
     private Date arrivalTime,newArrivalTime;
     private Date flightDuration;
+    private Date departureTimeWithDelay;
     private Double distanceTravelled;
     private Integer delay;
     private String departureAirport,departureCity,arrivalAirport,arrivalCity,flightNumber,airline;
@@ -27,6 +28,27 @@ public class Flight {
         this.flightNumber = flightNumber;
         this.airline = airline;
         setNewArrivalTime(dateOfFlight,arrivalTime);
+        setDepartureTimeWithDelay(dateOfFlight,departureTime);
+    }
+
+    public Date getDepartureTimeWithDelay() {
+        return departureTimeWithDelay;
+    }
+
+    public void setDepartureTimeWithDelay(String dOF,String departureTime) {
+        String[] split=departureTime.toString().split(":");
+        Integer i=Integer.parseInt(split[1])+delay;
+        Integer h=Integer.parseInt(split[0]);
+        if(i%60>0){
+            h=h+(i/60);
+            i=i%60;
+        }
+        String s=h+":"+i;
+        try {
+            this.departureTimeWithDelay = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(dOF+" "+s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public Date getNewArrivalTime() {
@@ -35,7 +57,6 @@ public class Flight {
 
     public void setNewArrivalTime(String dOF,String arrivalTime) {
         String[] split=arrivalTime.toString().split(":");
-        System.out.println(split.toString());
         Integer i=Integer.parseInt(split[1])+delay;
         Integer h=Integer.parseInt(split[0]);
         if(i%60>0){
@@ -50,7 +71,10 @@ public class Flight {
         }
 
     }
+    public String getDepartureTimeWithDelayString(){
 
+        return new SimpleDateFormat("hh:mm").format(getDepartureTime());
+    }
     public Date getDateOfFlight() {
         return dateOfFlight;
     }
@@ -178,5 +202,24 @@ public class Flight {
 
     public void setAirline(String airline) {
         this.airline = airline;
+    }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "dateOfFlight=" + dateOfFlight +
+                ", departureTime=" + departureTime +
+                ", arrivalTime=" + arrivalTime +
+                ", newArrivalTime=" + newArrivalTime +
+                ", flightDuration=" + flightDuration +
+                ", distanceTravelled=" + distanceTravelled +
+                ", delay=" + delay +
+                ", departureAirport='" + departureAirport + '\'' +
+                ", departureCity='" + departureCity + '\'' +
+                ", arrivalAirport='" + arrivalAirport + '\'' +
+                ", arrivalCity='" + arrivalCity + '\'' +
+                ", flightNumber='" + flightNumber + '\'' +
+                ", airline='" + airline + '\'' +
+                '}';
     }
 }

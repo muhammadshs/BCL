@@ -1,7 +1,9 @@
 package com.dwteam.ui;
 
+import com.dwteam.controller.BCLController;
 import com.dwteam.model.Flight;
 import com.dwteam.repository.CsvReader;
+import com.dwteam.service.BCLService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -11,142 +13,148 @@ public class BCLUi extends JFrame {
     private JTable jTable;
     private CsvReader csvReader;
     private JLabel jLabelImg, jLabelHND, jLabelCDG, jLabelHKG, jLabelDXB,
-            jLabelAMS, jLabelMAD, jLabelJFK, jLabelFCO, jLabelSYD
-            , jLabelDEL, jLabelGRU, jLabelYYZ, jLabelMEX, jLabelARN, jLabelCAI, jLabelLOS,
+            jLabelAMS, jLabelMAD, jLabelJFK, jLabelFCO, jLabelSYD, jLabelDEL, jLabelGRU, jLabelYYZ, jLabelMEX, jLabelARN, jLabelCAI, jLabelLOS,
             jLabelSVO, jLabelRAK,
             jLabelLVS, jLabelJNB, jLabelBKK, jLabelDUB, jLabelLIS, jLabelATH, jLabelDFW, jLabelBCL;
+    private FlightListUi flightListUi;
     private JScrollPane jScrollPane;
+    private BCLController bclController;
+    private BCLService bclService;
+
     public BCLUi() throws HeadlessException {
 
-
-        setBounds(200,100,1140,720);
-        Container container=getContentPane();
+        setBounds(200, 100, 1140, 720);
+        Container container = getContentPane();
         try {
-            csvReader=new CsvReader();
+            csvReader = new CsvReader();
         } catch (Exception e) {
             e.printStackTrace();
         }
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        bclController = new BCLController();
+        bclService = new BCLService();
         init();
+
         container.add(jScrollPane);
         container.add(jLabelImg);
 
         setLayout(null);
         setVisible(true);
     }
-    private void init(){
-        DefaultTableModel defaultTableModel=new DefaultTableModel();
+
+    private void init() {
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
         defaultTableModel.addColumn("Departure  Airport");
         defaultTableModel.addColumn("Arrival AirPort");
         defaultTableModel.addColumn("Departure Time");
         defaultTableModel.addColumn("Original Arrival Time");
-        defaultTableModel.addColumn("Delay Time");
+        defaultTableModel.addColumn("Delay Time [minutes]");
         defaultTableModel.addColumn("New Arrival Time");
-        Object[] ob=new Object[6];
-        for (Flight f:csvReader.getList()
+        Object[] ob = new Object[6];
+        for (Flight f : csvReader.getList()
         ) {
-            ob[0]=f.getDepartureAirport();
-            ob[1]=f.getArrivalAirport();
-            ob[2]=f.getDepartureTimeString();
-            ob[3]=f.getArrivalTimeString();
-            ob[4]=f.getDelay();
-            ob[5]=f.getNewArrivalTimeString();
+            ob[0] = f.getDepartureAirport();
+            ob[1] = f.getArrivalAirport();
+            ob[2] = f.getDepartureTimeString();
+            ob[3] = f.getArrivalTimeString();
+            ob[4] = f.getDelay();
+            ob[5] = f.getNewArrivalTimeString();
             defaultTableModel.addRow(ob);
         }
 
 
-        jTable=new JTable(defaultTableModel);
+        jTable = new JTable(defaultTableModel);
 
-        jTable.setBounds(0,0,1125,150);
+        jTable.setBounds(0, 0, 1125, 150);
         // jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         //jTable.setShowHorizontalLines(true);
-        jScrollPane=new JScrollPane(jTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        jScrollPane.setBounds(0,0,1125,150);
+        jScrollPane = new JScrollPane(jTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jScrollPane.setBounds(0, 0, 1125, 150);
 
 
         ImageIcon icon = new ImageIcon("G:\\Java Project\\bcl\\src\\main\\resources\\img\\image.png");
-        Font font=new Font("sp",Font.BOLD,10);
-        jLabelImg=new JLabel(icon);
-        jLabelImg.setBounds(0,150,1125,570);
-        jLabelHND =new JLabel("HND");
-        jLabelHND.setBounds(1000,150,40,20);
-        jLabelCDG =new JLabel("CDG");
+        Font font = new Font("sp", Font.BOLD, 10);
+        jLabelImg = new JLabel(icon);
+        jLabelImg.setBounds(0, 150, 1125, 570);
+        jLabelHND = new JLabel("HND");
+        jLabelHND.setBounds(1000, 150, 40, 20);
+        jLabelCDG = new JLabel("CDG");
         jLabelCDG.setFont(font);
-        jLabelCDG.setBounds(500,130,40,20);
-        jLabelHKG =new JLabel("HKG");
+        jLabelCDG.setBounds(500, 130, 40, 20);
+        jLabelHKG = new JLabel("HKG");
         jLabelHKG.setFont(font);
-        jLabelHKG.setBounds(915,220,50,20);
-        jLabelDXB =new JLabel("DXB");
+        jLabelHKG.setBounds(915, 220, 50, 20);
+        jLabelDXB = new JLabel("DXB");
         jLabelDXB.setFont(font);
-        jLabelDXB.setBounds(690,220,40,20);
-        jLabelAMS =new JLabel("AMS");
+        jLabelDXB.setBounds(690, 220, 40, 20);
+        jLabelAMS = new JLabel("AMS");
         jLabelAMS.setFont(font);
-        jLabelAMS.setBounds(510,100,60,20);
-        jLabelMAD =new JLabel("MAD");
+        jLabelAMS.setBounds(510, 100, 60, 20);
+        jLabelMAD = new JLabel("MAD");
         jLabelMAD.setFont(font);
-        jLabelMAD.setBounds(470,150,40,20);
-        jLabelJFK =new JLabel("JFK");
+        jLabelMAD.setBounds(470, 150, 40, 20);
+        jLabelJFK = new JLabel("JFK");
         jLabelJFK.setFont(font);
-        jLabelJFK.setBounds(250,150,60,20);
-        jLabelFCO =new JLabel("FCD");
+        jLabelJFK.setBounds(250, 150, 60, 20);
+        jLabelFCO = new JLabel("FCD");
         jLabelFCO.setFont(font);
-        jLabelFCO.setBounds(540,150,60,20);
+        jLabelFCO.setBounds(540, 150, 60, 20);
         jLabelImg.add(jLabelCDG);
-        jLabelSYD =new JLabel("SYD");
+        jLabelSYD = new JLabel("SYD");
         jLabelSYD.setFont(font);
-        jLabelSYD.setBounds(1030,450,60,20);
-        jLabelDEL =new JLabel("DEL");
+        jLabelSYD.setBounds(1030, 450, 60, 20);
+        jLabelDEL = new JLabel("DEL");
         jLabelDEL.setFont(font);
-        jLabelDEL.setBounds(780,220,60,20);
-        jLabelGRU =new JLabel("GRU");
+        jLabelDEL.setBounds(780, 220, 60, 20);
+        jLabelGRU = new JLabel("GRU");
         jLabelGRU.setFont(font);
-        jLabelGRU.setBounds(320,400,60,20);
-        jLabelYYZ =new JLabel("YYZ");
+        jLabelGRU.setBounds(320, 400, 60, 20);
+        jLabelYYZ = new JLabel("YYZ");
         jLabelYYZ.setFont(font);
-        jLabelYYZ.setBounds(230,130,60,20);
-        jLabelMEX =new JLabel("MEX");
+        jLabelYYZ.setBounds(230, 130, 60, 20);
+        jLabelMEX = new JLabel("MEX");
         jLabelMEX.setFont(font);
-        jLabelMEX.setBounds(110,230,60,20);
-        jLabelARN =new JLabel("ARN");
+        jLabelMEX.setBounds(110, 230, 60, 20);
+        jLabelARN = new JLabel("ARN");
         jLabelARN.setFont(font);
-        jLabelARN.setBounds(550,70,60,20);
-        jLabelCAI =new JLabel("CAI");
+        jLabelARN.setBounds(550, 70, 60, 20);
+        jLabelCAI = new JLabel("CAI");
         jLabelCAI.setFont(font);
-        jLabelCAI.setBounds(600,200,60,20);
-        jLabelLOS =new JLabel("LOS");
+        jLabelCAI.setBounds(600, 200, 60, 20);
+        jLabelLOS = new JLabel("LOS");
         jLabelLOS.setFont(font);
-        jLabelLOS.setBounds(450,170,60,20);
-        jLabelRAK =new JLabel("RAK");
+        jLabelLOS.setBounds(450, 170, 60, 20);
+        jLabelRAK = new JLabel("RAK");
         jLabelRAK.setFont(font);
-        jLabelRAK.setBounds(450,200,60,20);
-        jLabelSVO =new JLabel("SVO");
+        jLabelRAK.setBounds(450, 200, 60, 20);
+        jLabelSVO = new JLabel("SVO");
         jLabelSVO.setFont(font);
-        jLabelSVO.setBounds(620,90,60,20);
-        jLabelLVS =new JLabel("LVS");
+        jLabelSVO.setBounds(620, 90, 60, 20);
+        jLabelLVS = new JLabel("LVS");
         jLabelLVS.setFont(font);
-        jLabelLVS.setBounds(50,170,60,20);
-        jLabelJNB =new JLabel("JNB");
+        jLabelLVS.setBounds(50, 170, 60, 20);
+        jLabelJNB = new JLabel("JNB");
         jLabelJNB.setFont(font);
-        jLabelJNB.setBounds(160,150,70,20);
-        jLabelBKK =new JLabel("BKK");
+        jLabelJNB.setBounds(160, 150, 70, 20);
+        jLabelBKK = new JLabel("BKK");
         jLabelBKK.setFont(font);
-        jLabelBKK.setBounds(870,255,60,20);
-        jLabelDUB =new JLabel("DUB");
+        jLabelBKK.setBounds(870, 255, 60, 20);
+        jLabelDUB = new JLabel("DUB");
         jLabelDUB.setFont(font);
-        jLabelDUB.setBounds(480,115,60,20);
-        jLabelLIS =new JLabel("LIS");
+        jLabelDUB.setBounds(480, 115, 60, 20);
+        jLabelLIS = new JLabel("LIS");
         jLabelLIS.setFont(font);
-        jLabelLIS.setBounds(485,170,60,20);
-        jLabelATH =new JLabel("ATH");
+        jLabelLIS.setBounds(485, 170, 60, 20);
+        jLabelATH = new JLabel("ATH");
         jLabelATH.setFont(font);
-        jLabelATH.setBounds(570,170,60,20);
-        jLabelDFW =new JLabel("DFW");
+        jLabelATH.setBounds(570, 170, 60, 20);
+        jLabelDFW = new JLabel("DFW");
         jLabelDFW.setFont(font);
-        jLabelDFW.setBounds(130,200,60,20);
-        jLabelBCL =new JLabel("BCD");
+        jLabelDFW.setBounds(130, 200, 60, 20);
+        jLabelBCL = new JLabel("BCD");
         jLabelBCL.setFont(font);
-        jLabelBCL.setBounds(480,105,60,20);
+        jLabelBCL.setBounds(480, 105, 60, 20);
         jLabelImg.add(jLabelLVS);
         jLabelImg.add(jLabelJNB);
         jLabelImg.add(jLabelBKK);
@@ -172,5 +180,11 @@ public class BCLUi extends JFrame {
         jLabelImg.add(jLabelLOS);
         jLabelImg.add(jLabelSVO);
         jLabelImg.add(jLabelRAK);
+        JScrollPane jScrollPane2 = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        flightListUi = new FlightListUi("BCL Live Departure", bclService.getFlightDelay());
+        jScrollPane2.setViewportView(flightListUi);
+        jScrollPane2.setBounds(5, 270, 110, 250);
+        jScrollPane.setBackground(new Color(0, 0, 0, 0));
+        jLabelImg.add(jScrollPane2);
     }
 }
