@@ -1,5 +1,6 @@
 package com.dwteam.repository;
 
+import com.dwteam.model.Flight;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
@@ -16,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 public class CsvReader {
-   private  List<String[]> list;
+   private  List<Flight> list;
 
     public CsvReader() throws Exception {
         list = new ArrayList<>();
@@ -28,6 +29,7 @@ public class CsvReader {
         try {
             // Create an object of file reader
             // class with CSV file as a parameter.
+            Flight flight;
             FileReader filereader = new FileReader(file);
             // create csvReader object and skip first Line
             CSVReader csvReader = new CSVReaderBuilder(filereader)
@@ -40,7 +42,8 @@ public class CsvReader {
             for (String[] s : allData
             ) {
                 if (s[0].equals(strDate)) {
-                    list.add(s);
+                    flight=new Flight(s[0],s[1],s[2],s[3],s[4],s[5],s[6],s[7],s[8],s[9],s[10],s[11]);
+                    list.add(flight);
                 }
 
             }
@@ -51,28 +54,21 @@ public class CsvReader {
             e.printStackTrace();
         }
     }
-        public List<String> readColumn(int i){
-        List<String> l=new ArrayList<>();
-        for (String[] s:list
-             ) {
-            l.add(s[i]);
 
-        }
-        return l;
-    }
-    public List<String[]> filterCity(String city){
-        List<String[]> l=new ArrayList<>();
-        for (String[] s:list
+
+    public List<Flight> filterAP(String aP){
+        List<Flight> l=new ArrayList<>();
+        for (Flight f:list
              ) {
-            if(s[7].equals(city)){
-                l.add(s);
+            if(f.getDepartureAirport().equals(aP)){
+                l.add(f);
             }
 
         }
         return l;
     }
 
-    public List<String[]> getList() {
+    public List<Flight> getList() {
         return list;
     }
 }

@@ -1,5 +1,6 @@
 package com.dwteam.ui;
 
+import com.dwteam.model.Flight;
 import com.dwteam.repository.CsvReader;
 
 import javax.swing.*;
@@ -43,14 +44,14 @@ public class BCLUi extends JFrame {
         defaultTableModel.addColumn("Delay Time");
         defaultTableModel.addColumn("New Arrival Time");
         Object[] ob=new Object[6];
-        for (String[] s:csvReader.getList()
+        for (Flight f:csvReader.getList()
         ) {
-            ob[0]=s[6];
-            ob[1]=s[8];
-            ob[2]=s[1];
-            ob[3]=s[2];
-            ob[4]=s[5];
-            ob[5]=s[2];
+            ob[0]=f.getDepartureAirport();
+            ob[1]=f.getArrivalAirport();
+            ob[2]=f.getDepartureTimeString();
+            ob[3]=f.getArrivalTimeString();
+            ob[4]=f.getDelay();
+            ob[5]=f.getNewArrivalTimeString();
             defaultTableModel.addRow(ob);
         }
 
