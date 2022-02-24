@@ -1,4 +1,5 @@
 import com.dwteam.reader.CsvReader;
+import org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

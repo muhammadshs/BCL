@@ -9,8 +9,10 @@ import java.util.List;
 
 public class FlightListUi extends JPanel {
     private JLabel jLabelTitle, jLabelItem;
-
+    ListPro<String,Integer> flight;
     public FlightListUi(String title, ListPro<String,Integer> flight) {
+      this.flight=flight;
+
         Border blackLine = BorderFactory.createLineBorder(Color.black);
         setBorder(blackLine);
         Font font = new Font("sp", Font.BOLD, 9);
@@ -39,5 +41,14 @@ public class FlightListUi extends JPanel {
         BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
         setLayout(boxLayout);
         setVisible(true);
+    }
+
+    public ListPro<String, Integer> getFlight() {
+        return flight;
+    }
+
+    public void setFlight(ListPro<String, Integer> flight) {
+
+        this.flight = flight;
     }
 }

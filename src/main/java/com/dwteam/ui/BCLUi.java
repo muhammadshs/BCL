@@ -23,12 +23,13 @@ public class BCLUi extends JFrame {
     private JScrollPane jScrollPane;
     private BCLController bclController;
     private BCLService bclService;
+    Container container;
     private static Map<String, JScrollPane> mapFlightUi = new HashMap<>();
 
     public BCLUi() throws HeadlessException {
 
         setBounds(200, 100, 1140, 720);
-        Container container = getContentPane();
+        container= getContentPane();
         try {
             csvReader = new CsvReader();
         } catch (Exception e) {
@@ -37,18 +38,18 @@ public class BCLUi extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        bclService = new BCLService();
+
 
         init();
 
-        container.add(jScrollPane);
-        container.add(jLabelImg);
+
 
         setLayout(null);
         setVisible(true);
     }
 
     private void init() {
+        bclService = new BCLService();
         DefaultTableModel defaultTableModel = new DefaultTableModel();
         defaultTableModel.addColumn("Departure  Airport");
         defaultTableModel.addColumn("Arrival AirPort");
@@ -91,6 +92,8 @@ public class BCLUi extends JFrame {
         jScrollPane2.setBounds(5, 270, 110, 250);
         jScrollPane.setBackground(null);
         jLabelImg.add(jScrollPane2);
+        container.add(jScrollPane);
+        container.add(jLabelImg);
     }
 
     private void createFlightListUi() {
@@ -387,5 +390,11 @@ public class BCLUi extends JFrame {
     }
 
 
+    public void refresh(){
+        container.removeAll();
 
+        init();
+        this.revalidate();
+        this.repaint();
+    }
 }

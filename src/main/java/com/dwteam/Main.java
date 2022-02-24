@@ -8,7 +8,14 @@ public class Main {
 
 
         BCLUi bclUi = new BCLUi();
-
+        try {
+            while (true) {
+                bclUi.refresh();
+                Thread.sleep(300000);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 }
