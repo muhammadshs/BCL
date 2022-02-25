@@ -29,7 +29,7 @@ public class BCLService {
         for (Flight f : listF
         ) {
             if (f.getDepartureAirport().equals(departureAirport)) {
-                 System.out.println(departureAirport);
+               //  System.out.println(departureAirport);
                 String s = f.getDepartureAirport() + "->" + f.getArrivalAirport() + " " + f.getDepartureTimeWithDelayString();
 
                 if (f.getDepartureTimeWithDelay().getTime() <= time) {

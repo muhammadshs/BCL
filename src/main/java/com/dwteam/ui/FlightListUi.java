@@ -31,6 +31,7 @@ public class FlightListUi extends JPanel {
                 jLabelItem.setForeground(Color.RED);
             }
             jLabelItem.setFont(font);
+
             add(jLabelItem);
             //System.out.println(flight.toString(i));
 
