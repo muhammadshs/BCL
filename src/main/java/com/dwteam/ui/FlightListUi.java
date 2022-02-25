@@ -32,10 +32,11 @@ public class FlightListUi extends JPanel {
             }
             jLabelItem.setFont(font);
             add(jLabelItem);
-            System.out.println(flight.toString(i));
+            //System.out.println(flight.toString(i));
 
         }
         BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
         setLayout(boxLayout);
+        setVisible(true);
     }
 }

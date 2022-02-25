@@ -8,6 +8,8 @@ import com.dwteam.service.BCLService;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BCLUi extends JFrame {
     private JTable jTable;
@@ -20,6 +22,7 @@ public class BCLUi extends JFrame {
     private JScrollPane jScrollPane;
     private BCLController bclController;
     private BCLService bclService;
+    private static Map<String, JScrollPane> mapFlightUi = new HashMap<>();
 
     public BCLUi() throws HeadlessException {
 
@@ -32,7 +35,7 @@ public class BCLUi extends JFrame {
         }
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        bclController = new BCLController();
+        bclController = new BCLController(mapFlightUi);
         bclService = new BCLService();
         init();
 
@@ -133,6 +136,7 @@ public class BCLUi extends JFrame {
         jLabelSVO.setBounds(620, 90, 60, 20);
         jLabelLVS = new JLabel("LVS");
         jLabelLVS.setFont(font);
+        jLabelLVS.addMouseListener(new BCLController(mapFlightUi));
         jLabelLVS.setBounds(50, 170, 60, 20);
         jLabelJNB = new JLabel("JNB");
         jLabelJNB.setFont(font);
@@ -180,11 +184,37 @@ public class BCLUi extends JFrame {
         jLabelImg.add(jLabelLOS);
         jLabelImg.add(jLabelSVO);
         jLabelImg.add(jLabelRAK);
+        mapFlightUi.put("LVS", new JScrollPane(new FlightListUi("List of Today Departure Flights LVS", bclService.getFlightSum("LVS")),JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER));
+        mapFlightUi.put("JNB", new JScrollPane(new FlightListUi("List of Today Departure Flights JNB", bclService.getFlightSum("JNB"))));
+        mapFlightUi.put("BKK", new JScrollPane(new FlightListUi("List of Today Departure Flights BKK", bclService.getFlightSum("BKK"))));
+        mapFlightUi.put("DUB", new JScrollPane(new FlightListUi("List of Today Departure Flights DUB", bclService.getFlightSum("DUB"))));
+        mapFlightUi.put("LIS", new JScrollPane(new FlightListUi("List of Today Departure Flights LIS", bclService.getFlightSum("LIS"))));
+        mapFlightUi.put("ATH", new JScrollPane(new FlightListUi("List of Today Departure Flights ATH", bclService.getFlightSum("ATH"))));
+        mapFlightUi.put("DFW", new JScrollPane(new FlightListUi("List of Today Departure Flights DFW", bclService.getFlightSum("DFW"))));
+        mapFlightUi.put("BCL", new JScrollPane(new FlightListUi("List of Today Departure Flights BCL", bclService.getFlightSum("BCL"))));
+        mapFlightUi.put("SYD", new JScrollPane(new FlightListUi("List of Today Departure Flights SYD", bclService.getFlightSum("SYD"))));
+        mapFlightUi.put("DEL", new JScrollPane(new FlightListUi("List of Today Departure Flights DEL", bclService.getFlightSum("DEL"))));
+        mapFlightUi.put("HND", new JScrollPane(new FlightListUi("List of Today Departure Flights HND", bclService.getFlightSum("HND"))));
+        mapFlightUi.put("HKG", new JScrollPane(new FlightListUi("List of Today Departure Flights HKG", bclService.getFlightSum("HKG"))));
+        mapFlightUi.put("DXB", new JScrollPane(new FlightListUi("List of Today Departure Flights DXB", bclService.getFlightSum("DXB"))));
+        mapFlightUi.put("AMS", new JScrollPane(new FlightListUi("List of Today Departure Flights AMS", bclService.getFlightSum("AMS"))));
+        mapFlightUi.put("MAD", new JScrollPane(new FlightListUi("List of Today Departure Flights MAD", bclService.getFlightSum("MAD"))));
+        mapFlightUi.put("JFK", new JScrollPane(new FlightListUi("List of Today Departure Flights JFK", bclService.getFlightSum("JFK"))));
+        mapFlightUi.put("FCO", new JScrollPane(new FlightListUi("List of Today Departure Flights FCO", bclService.getFlightSum("FCO"))));
+        mapFlightUi.put("GRU", new JScrollPane(new FlightListUi("List of Today Departure Flights GRU", bclService.getFlightSum("GRU"))));
+        mapFlightUi.put("YYZ", new JScrollPane(new FlightListUi("List of Today Departure Flights YYZ", bclService.getFlightSum("YYZ"))));
+        mapFlightUi.put("MEX", new JScrollPane(new FlightListUi("List of Today Departure Flights MEX", bclService.getFlightSum("MEX"))));
+        mapFlightUi.put("ARN", new JScrollPane(new FlightListUi("List of Today Departure Flights ARN", bclService.getFlightSum("ARN"))));
+        mapFlightUi.put("CAI", new JScrollPane(new FlightListUi("List of Today Departure Flights CAI", bclService.getFlightSum("CAI"))));
+        mapFlightUi.put("LOS", new JScrollPane(new FlightListUi("List of Today Departure Flights LOS", bclService.getFlightSum("LOS"))));
+        mapFlightUi.put("SVO", new JScrollPane(new FlightListUi("List of Today Departure Flights SVO", bclService.getFlightSum("SVO"))));
+        mapFlightUi.put("RAK", new JScrollPane(new FlightListUi("List of Today Departure Flights RAK", bclService.getFlightSum("RAK"))));
+        jLabelImg.add(mapFlightUi.get("LVS"));
         JScrollPane jScrollPane2 = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         flightListUi = new FlightListUi("BCL Live Departure", bclService.getFlightDelay());
         jScrollPane2.setViewportView(flightListUi);
         jScrollPane2.setBounds(5, 270, 110, 250);
-        jScrollPane.setBackground(new Color(0, 0, 0, 0));
+        jScrollPane.setBackground(null);
         jLabelImg.add(jScrollPane2);
     }
 }

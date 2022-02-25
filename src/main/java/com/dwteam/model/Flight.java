@@ -27,53 +27,31 @@ public class Flight {
         this.arrivalCity = arrivalCity;
         this.flightNumber = flightNumber;
         this.airline = airline;
-        setNewArrivalTime(dateOfFlight,arrivalTime);
-        setDepartureTimeWithDelay(dateOfFlight,departureTime);
+        setNewArrivalTime();
+        setDepartureTimeWithDelay();
     }
 
     public Date getDepartureTimeWithDelay() {
         return departureTimeWithDelay;
     }
 
-    public void setDepartureTimeWithDelay(String dOF,String departureTime) {
-        String[] split=departureTime.toString().split(":");
-        Integer i=Integer.parseInt(split[1])+delay;
-        Integer h=Integer.parseInt(split[0]);
-        if(i%60>0){
-            h=h+(i/60);
-            i=i%60;
-        }
-        String s=h+":"+i;
-        try {
-            this.departureTimeWithDelay = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(dOF+" "+s);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    public void setDepartureTimeWithDelay() {
+        Long time=departureTime.getTime()+(getDelay()*60000);
+        departureTimeWithDelay=new Date(time);
     }
 
     public Date getNewArrivalTime() {
         return newArrivalTime;
     }
 
-    public void setNewArrivalTime(String dOF,String arrivalTime) {
-        String[] split=arrivalTime.toString().split(":");
-        Integer i=Integer.parseInt(split[1])+delay;
-        Integer h=Integer.parseInt(split[0]);
-        if(i%60>0){
-            h=h+(i/60);
-            i=i%60;
-        }
-        String s=h+":"+i;
-        try {
-            this.newArrivalTime = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(dOF+" "+s);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    public void setNewArrivalTime() {
+        Long time=arrivalTime.getTime()+(getDelay()*60000);
+        newArrivalTime=new Date(time);
 
     }
     public String getDepartureTimeWithDelayString(){
 
-        return new SimpleDateFormat("hh:mm").format(getDepartureTime());
+        return new SimpleDateFormat("hh:mm").format(getDepartureTimeWithDelay());
     }
     public Date getDateOfFlight() {
         return dateOfFlight;
