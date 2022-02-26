@@ -23,7 +23,7 @@ public class CsvReader {
         list = new ArrayList<>();
         listFut = new ArrayList<>();
         listYes=new ArrayList<>();
-        //روش پیدا کردن فایل رو عوض کن
+
         String url=new File("src/main/resources/info_csv/Flights.csv").getAbsolutePath();
         readAllDataAtOnce(url);
 
