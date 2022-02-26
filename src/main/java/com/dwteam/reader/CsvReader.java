@@ -1,9 +1,10 @@
-package com.dwteam.repository;
+package com.dwteam.reader;
 
 import com.dwteam.model.Flight;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,7 +24,8 @@ public class CsvReader {
         listFut = new ArrayList<>();
         listYes=new ArrayList<>();
         //روش پیدا کردن فایل رو عوض کن
-        readAllDataAtOnce("G:\\Java Project\\bcl\\src\\main\\resources\\info_csv\\Flights.csv");
+        String url=new File("src/main/resources/info_csv/Flights.csv").getAbsolutePath();
+        readAllDataAtOnce(url);
 
     }
 
