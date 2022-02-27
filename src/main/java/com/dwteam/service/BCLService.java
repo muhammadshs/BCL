@@ -4,6 +4,7 @@ import com.dwteam.ListPro;
 import com.dwteam.model.Flight;
 import com.dwteam.reader.CsvReader;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class BCLService {
         return listPro;
     }
 
-    public ListPro<String, Integer> getFlightDelay() {
+    public ListPro<String, Integer> getFlightDelayString() {
         Date date = new Date();
         Long time = date.getTime() + (30 * 60 * 1000);
         List<Flight> yesList=csvReader.getListYes();
@@ -98,6 +99,33 @@ public class BCLService {
                 } else {
                     listPro.add(s2, 0);
                 }
+            }
+        }
+
+        return listPro;
+    }
+    public List<Flight> getFlightDelay() {
+        Date date = new Date();
+        Long time = date.getTime() + (30 * 60 * 1000);
+        List<Flight> yesList=csvReader.getListYes();
+        List<Flight> listF = csvReader.getListFut();
+        List<Flight> listPro=new ArrayList<>();
+        Long time2=date.getTime()-(24*60*6000);
+        date=new Date(time2);
+        for (Flight f:listF
+        ) {
+
+            if (f.getDelay() >= 30){
+
+                listPro.add(f);
+
+            }
+
+        }
+        for (Flight fy:yesList
+        ) {
+            if (fy.getDelay() >= 30) {
+                    listPro.add(fy);
             }
         }
 

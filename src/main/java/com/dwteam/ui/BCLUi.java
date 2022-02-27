@@ -58,7 +58,7 @@ public class BCLUi extends JFrame {
         defaultTableModel.addColumn("Delay Time [minutes]");
         defaultTableModel.addColumn("New Arrival Time");
         Object[] ob = new Object[6];
-        for (Flight f : csvReader.getList()
+        for (Flight f : bclService.getFlightDelay()
         ) {
             ob[0] = f.getDepartureAirport();
             ob[1] = f.getArrivalAirport();
@@ -87,7 +87,7 @@ public class BCLUi extends JFrame {
         creatLocJLabel(font);
         addTojLabelImg();
         JScrollPane jScrollPane2 = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        flightListUi = new FlightListUi("BCL Live Departure", bclService.getFlightDelay());
+        flightListUi = new FlightListUi("BCL Live Departure", bclService.getFlightSum("BCL"));
         jScrollPane2.setViewportView(flightListUi);
         jScrollPane2.setBounds(5, 270, 110, 250);
         jScrollPane.setBackground(null);
