@@ -10,10 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class CsvReader {
     private List<Flight> list;
@@ -81,6 +78,22 @@ public class CsvReader {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        //---------
+
+        Collections.sort(listFut, new Comparator<Flight>() {
+            @Override
+            public int compare(Flight o1, Flight o2) {
+                return o1.getDepartureTimeWithDelay().compareTo(o2.getDepartureTimeWithDelay());
+            }
+
+        });
+        Collections.sort(listYes, new Comparator<Flight>() {
+            @Override
+            public int compare(Flight o1, Flight o2) {
+                return o1.getDepartureTimeWithDelay().compareTo(o2.getDepartureTimeWithDelay());
+            }
+
+        });
     }
 
 
