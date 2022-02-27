@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 public class BCLService {
-    CsvReader csvReader;
-    List<Flight> list;
+   private CsvReader csvReader;
+    private List<Flight> list;
 
     public BCLService() {
         try {

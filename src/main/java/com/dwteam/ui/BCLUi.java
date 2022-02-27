@@ -397,4 +397,24 @@ public class BCLUi extends JFrame {
         this.revalidate();
         this.repaint();
     }
+
+    public JTable getjTable() {
+        return jTable;
+    }
+
+    public JLabel getjLabelCDG() {
+        return jLabelCDG;
+    }
+
+    public FlightListUi getFlightListUi() {
+        return flightListUi;
+    }
+
+    public JScrollPane getjScrollPane() {
+        return jScrollPane;
+    }
+
+    public static Map<String, JScrollPane> getMapFlightUi() {
+        return mapFlightUi;
+    }
 }

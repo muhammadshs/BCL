@@ -1,19 +1,26 @@
 import com.dwteam.reader.CsvReader;
-import org.junit.Assert.*;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
-import java.io.File;
 
 public class CsvReaderTest {
     CsvReader csvReader;
+
     public CsvReaderTest() throws Exception {
-        csvReader=new CsvReader();
+        csvReader = new CsvReader();
     }
 
     @Test
-     void readAllDataAtOnceTest(){
-        String url=new File("src/main/resources/info_csv/Flights.csv").getAbsolutePath();
-        csvReader.readAllDataAtOnce(url);
+    public void readAllDataAtOnceTest() {
+
+        Assert.assertNotNull(csvReader.getList());
+        Assert.assertNotNull(csvReader.getListFut());
+        Assert.assertNotNull(csvReader.getListYes());
+        Assert.assertNotNull(csvReader.filterAPFut("LIS"));
+        Assert.assertNotNull(csvReader.filterAPFut("BCL"));
+        Assert.assertNotNull(csvReader.filterAP("BCL"));
+        Assert.assertNotNull(csvReader.filterAPYes("BCL"));
 
     }
+
 }
